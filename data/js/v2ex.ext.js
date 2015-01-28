@@ -59,7 +59,7 @@ var utils = (function () {
 
       $.ajax({
         type: 'GET',
-        url: '/api/members/show.json?username=' + username,
+        url: 'https://www.v2ex.com/api/members/show.json?username=' + username,
         dataType: 'json',
         context: this,
         success: function (data) {
@@ -316,7 +316,7 @@ TopicExt.prototype.init = function () {
   }).on('mouseenter', function () {
     var cell = $(this);
     var reply = cell.data('reply');
-    if (reply.hasPeopleAtMe == undefined) {
+    if ( reply && reply.hasPeopleAtMe == undefined) {
       reply.hasPeopleAtMe = false;
       for (var i = 0, len = st.replies.length; i < len; i++) {
         if (st.replies[i].ats.indexOf(reply.username) >= 0) {

@@ -1,0 +1,15 @@
+{
+  "name": "v2ex_ext",
+  "title": "v2ex看帖助手",
+  "id": "v2ex_ext@liujiacai.net",
+  "description": "让你更好的上v2ex",
+  "author": "jkeylu",
+  "contributors": ["liujiacai"],
+  "homepage": "https://github.com/jiacai2050/v2ex.ext",
+  "license": "MPL 2.0",
+  "icon": "v2ex.ico",
+  "permissions": {
+    "cross-domain-content": ["https://www.v2ex.com", "http://picupload.service.weibo.com"]
+  },
+  "version": "0.1"
+}
