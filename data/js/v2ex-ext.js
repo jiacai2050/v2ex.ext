@@ -49,6 +49,7 @@ function eachSeries(arr, iterator, callback) {
 // {{{ utils
 var utils = (function () {
   var user_info_by_username = {}
+    , hostURL = window.location.protocol + "//" + window.location.hostname
     , user_info_by_id = {};
 
   return {
@@ -57,38 +58,42 @@ var utils = (function () {
         return callback(null, user_info_by_username[username]);
       }
 
-      $.ajax({
-        type: 'GET',
-        url: 'https://www.v2ex.com/api/members/show.json?username=' + username,
-        dataType: 'json',
-        context: this,
-        success: function (data) {
-          user_info_by_username[username] = data;
-          callback(null, data);
-        },
-        error: function () {
-          callback(true);
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200 ) {
+            var data = JSON.parse(xhr.responseText);
+            user_info_by_username[username] = data;
+            callback(null, data);
+          }
+          else {
+            callback(true);
+          }
         }
-      });
+      };
+      xhr.open('get', hostURL + '/api/members/show.json?username=' + username, true);
+      xhr.send();
     },
     getUserById: function (id, callback) {
       if (id in user_info_by_id) {
         return callback(null, user_info_by_id[id]);
       }
 
-      $.ajax({
-        type: 'GET',
-        url: '/api/members/show.json?id=' + id,
-        dataType: 'json',
-        context: this,
-        success: function (data) {
-          user_info_by_id[id] = data;
-          callback(null, data);
-        },
-        error: function () {
-          callback(true);
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200 ) {
+            var data = JSON.parse(xhr.responseText);
+            user_info_by_id[id] = data;
+            callback(null, data);
+          }
+          else {
+            callback(true);
+          }
         }
-      });
+      };
+      xhr.open('get', hostURL + '/api/members/show.json?id=' + id, true);
+      xhr.send();
     },
     formatDate: function (timestamp) {
       try {
@@ -325,7 +330,7 @@ TopicExt.prototype.init = function () {
         }
       }
     }
-    if (reply.hasPeopleAtMe === true) {
+    if (reply && reply.hasPeopleAtMe === true) {
       cell.find('a.at_me').show();
     }
   }).on('mouseleave', function () {
@@ -604,7 +609,6 @@ $(function () {
       weibotuchuang.upload(file, function (err, src) {
         if (err) {
           alert(err);
-          console.log(err);
           return;
         }
         var c = replyContent.val();

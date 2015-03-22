@@ -2,14 +2,24 @@
   "name": "v2ex_ext",
   "title": "v2ex看帖助手",
   "id": "v2ex_ext@liujiacai.net",
-  "description": "让你更好的上v2ex",
+  "description": "让你更轻松地在v2ex看回复、刷长帖、传图片",
   "author": "jkeylu",
   "contributors": ["liujiacai"],
   "homepage": "https://github.com/jiacai2050/v2ex.ext",
   "license": "MPL 2.0",
-  "icon": "v2ex.ico",
+  "icon": "data/img/v2ex.ico",
   "permissions": {
-    "cross-domain-content": ["https://www.v2ex.com", "http://picupload.service.weibo.com"]
+    "cross-domain-content": [
+      "http://picupload.service.weibo.com"
+    ],
+  "private-browsing": true
   },
-  "version": "0.1"
+  "preferences": [{
+    "type": "integer",
+    "name": "checkInterval",
+    "value": 10,
+    "description": "（单位：分钟）",
+    "title": "新消息提醒间隔"
+  }],
+  "version": "0.2"
 }
